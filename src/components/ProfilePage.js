@@ -1,19 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { logout } from '../features/auth/authSlice';
-import logo from '../img/argentBankLogo.png';
+
 
 
 const ProfilePage = () => {
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/login');
-  };
 
   return (
     <>
@@ -31,7 +21,7 @@ const ProfilePage = () => {
             <i class="fa fa-user-circle"></i>
             Tony
           </Link>
-          <Link class="main-nav-item" to="/" onClick={handleLogout}>
+          <Link class="main-nav-item" to="/">
             <i class="fa fa-sign-out"></i>
             Sign Out
           </Link>

@@ -1,9 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../img/argentBankLogo.png';
-import chatIcon from '../img/icon-chat.png';
-import moneyIcon from '../img/icon-money.png';
-import securityIcon from '../img/icon-security.png';
 
 const HomePage = () => {
   return (
@@ -12,7 +8,7 @@ const HomePage = () => {
         <Link className="main-nav-logo" to="/">
           <img
             className="main-nav-logo-image"
-            src={logo}
+            src=""
             alt="Argent Bank Logo"
           />
           <h1 className="sr-only">Argent Bank</h1>

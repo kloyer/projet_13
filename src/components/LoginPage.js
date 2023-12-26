@@ -1,24 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../features/auth/authSlice';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const credentials = {
-      email: e.target.elements.username.value,
-      password: e.target.elements.password.value,
-    };
-    console.log('Form submitted with:', credentials);
-    dispatch(login(credentials)).unwrap()
-      .then(() => navigate('/profile'))
-      .catch((error) => console.error('Login failed:', error));
-  };
 
   return (
     <>
@@ -42,7 +26,7 @@ const LoginPage = () => {
         <section class="sign-in-content">
           <i class="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div class="input-wrapper">
               <label for="username">Username</label>
               <input type="text" id="username" />
