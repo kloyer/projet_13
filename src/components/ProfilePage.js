@@ -1,17 +1,50 @@
 // src/components/ProfilePage.js
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserProfile } from '../actions/userActions';
+import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.user.profile);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Profile fetch failed with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        
+        dispatch(setUserProfile(data.body));
+      } catch (error) {
+        console.error('Fetch profile error:', error);
+      }
+    };
+
+    if (token) {
+      fetchProfile();
+    }
+  }, [dispatch, token]);
 
   return (
     <>
       <nav className="main-nav">
-        <div className="main-nav-logo">
-          <img
-            class="main-nav-logo-image"
-            src="./img/argentBankLogo.png"
-            alt="Argent Bank Logo"
-          />
+      <div className="main-nav-logo">
+          <Link to="/">
+            <img class="main-nav-logo-image" src="../img/argentBankLogo.png" alt="Argent Bank Logo" />
+          </Link>
           <h1 class="sr-only">Argent Bank</h1>
         </div>
         <div>
@@ -19,15 +52,15 @@ const ProfilePage = () => {
             <i class="fa fa-user-circle"></i>
             Tony
           </div>
-          <div class="main-nav-item">
+          <Link to="/" class="main-nav-item">
             <i class="fa fa-sign-out"></i>
             Sign Out
-          </div>
+          </Link>
         </div>
       </nav>
       <main className="main bg-dark">
         <div class="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
+          <h1>Welcome back<br />{profile?.firstName} {profile?.lastName}!</h1>
           <button class="edit-button">Edit Name</button>
         </div>
         <h2 class="sr-only">Accounts</h2>

@@ -1,23 +1,22 @@
 // src/components/HomePage.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HomePage = () => {
   return (
     <>
       <nav className="main-nav">
         <div className="main-nav-logo">
-          <img
-            className="main-nav-logo-image"
-            src=""
-            alt="Argent Bank Logo"
-          />
+          <Link to="/">
+            <img className="main-nav-logo-image" src="../img/argentBankLogo.png" alt="Argent Bank Logo" />
+          </Link>
           <h1 className="sr-only">Argent Bank</h1>
         </div>
         <div>
-          <div className="main-nav-item">
+          <Link to="/login" className="main-nav-item">
             <i className="fa fa-user-circle"></i>
             Sign In
-          </div>
+          </Link>
         </div>
       </nav>
       <main>

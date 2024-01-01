@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUsername } from '../actions/userActions';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -21,8 +22,8 @@ const LoginPage = () => {
       });
       if (!response.ok) throw new Error('Login failed');
       const data = await response.json();
-      localStorage.setItem('token', data.token); // Or dispatch an action to store in Redux
-      navigate('/profile'); // Redirect to profile page
+      localStorage.setItem('token', data.body.token);
+      navigate('/profile');
     } catch (error) {
       console.error('Login error:', error);
     }
@@ -32,18 +33,16 @@ const LoginPage = () => {
     <>
       <nav className="main-nav">
       <div className="main-nav-logo">
-        <img
-          class="main-nav-logo-image"
-          src="./img/argentBankLogo.png"
-          alt="Argent Bank Logo"
-        />
-        <h1 class="sr-only">Argent Bank</h1>
-      </div>
+          <Link to="/">
+            <img class="main-nav-logo-image" src="../img/argentBankLogo.png" alt="Argent Bank Logo" />
+          </Link>
+          <h1 class="sr-only">Argent Bank</h1>
+        </div>
       <div>
-        <div className="main-nav-item">
+        <Link to ="/login" className="main-nav-item">
           <i class="fa fa-user-circle"></i>
           Sign In
-        </div>
+        </Link>
       </div>
       </nav>
       <main className="main bg-dark">
