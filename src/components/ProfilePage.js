@@ -1,30 +1,28 @@
+// src/components/ProfilePage.js
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-
-
 
 const ProfilePage = () => {
 
   return (
     <>
       <nav className="main-nav">
-        <Link className="main-nav-logo" to="/">
+        <div className="main-nav-logo">
           <img
             class="main-nav-logo-image"
             src="./img/argentBankLogo.png"
             alt="Argent Bank Logo"
           />
           <h1 class="sr-only">Argent Bank</h1>
-        </Link>
+        </div>
         <div>
-          <Link class="main-nav-item" to="/profile">
+          <div class="main-nav-item">
             <i class="fa fa-user-circle"></i>
             Tony
-          </Link>
-          <Link class="main-nav-item" to="/">
+          </div>
+          <div class="main-nav-item">
             <i class="fa fa-sign-out"></i>
             Sign Out
-          </Link>
+          </div>
         </div>
       </nav>
       <main className="main bg-dark">
