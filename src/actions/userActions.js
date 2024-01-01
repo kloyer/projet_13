@@ -8,4 +8,8 @@ export const setUsername = (username) => ({
     type: 'SET_USER_PROFILE',
     payload: profile,
   });
-  
+  export const logoutUser = () => {
+    return {
+      type: 'LOGOUT_USER',
+    };
+  };

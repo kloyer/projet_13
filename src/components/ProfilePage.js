@@ -1,11 +1,12 @@
 // src/components/ProfilePage.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserProfile } from '../actions/userActions';
-import { Link } from 'react-router-dom';
+import { setUserProfile, logoutUser } from '../actions/userActions';
+import { useNavigate, Link } from 'react-router-dom';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const profile = useSelector((state) => state.user.profile);
   const token = localStorage.getItem('token');
 
@@ -25,7 +26,6 @@ const ProfilePage = () => {
         }
 
         const data = await response.json();
-        console.log(data);
         
         dispatch(setUserProfile(data.body));
       } catch (error) {
@@ -37,6 +37,12 @@ const ProfilePage = () => {
       fetchProfile();
     }
   }, [dispatch, token]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');  // Clear token from localStorage
+    dispatch(logoutUser());  // Dispatch logout action to reset state
+    navigate('/login');  // Redirect user to login page
+  };
 
   return (
     <>
@@ -52,8 +58,8 @@ const ProfilePage = () => {
             <i class="fa fa-user-circle"></i>
             Tony
           </div>
-          <Link to="/" class="main-nav-item">
-            <i class="fa fa-sign-out"></i>
+          <Link to="/" className="main-nav-item" onClick={handleLogout}>
+            <i className="fa fa-sign-out"></i>
             Sign Out
           </Link>
         </div>
