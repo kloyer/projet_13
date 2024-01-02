@@ -13,3 +13,4 @@ export const setUsername = (username) => ({
       type: 'LOGOUT_USER',
     };
   };
+  

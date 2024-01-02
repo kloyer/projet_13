@@ -1,6 +1,10 @@
 // src/components/HomePage.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import argentBankLogo from '../img/argentBankLogo.png';
+import iconChat from '../img/icon-chat.png';
+import iconMoney from '../img/icon-money.png';
+import iconSecurity from '../img/icon-security.png';
 
 const HomePage = () => {
   return (
@@ -8,7 +12,7 @@ const HomePage = () => {
       <nav className="main-nav">
         <div className="main-nav-logo">
           <Link to="/">
-            <img className="main-nav-logo-image" src="../img/argentBankLogo.png" alt="Argent Bank Logo" />
+            <img className="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
           </Link>
           <h1 className="sr-only">Argent Bank</h1>
         </div>
@@ -32,7 +36,7 @@ const HomePage = () => {
       <section class="features">
         <h2 class="sr-only">Features</h2>
         <div class="feature-item">
-          <img src="./img/icon-chat.png" alt="Chat Icon" class="feature-icon" />
+          <img src={iconChat} alt="Chat Icon" class="feature-icon" />
           <h3 class="feature-item-title">You are our #1 priority</h3>
           <p>
             Need to talk to a representative? You can get in touch through our
@@ -41,7 +45,7 @@ const HomePage = () => {
         </div>
         <div class="feature-item">
           <img
-            src="./img/icon-money.png"
+            src={iconMoney}
             alt="Chat Icon"
             class="feature-icon"
           />
@@ -52,7 +56,7 @@ const HomePage = () => {
         </div>
         <div class="feature-item">
           <img
-            src="./img/icon-security.png"
+            src={iconSecurity}
             alt="Chat Icon"
             class="feature-icon"
           />

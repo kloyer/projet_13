@@ -1,14 +1,18 @@
 // src/components/ProfilePage.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserProfile, logoutUser } from '../actions/userActions';
 import { useNavigate, Link } from 'react-router-dom';
+import argentBankLogo from '../img/argentBankLogo.png';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profile = useSelector((state) => state.user.profile);
   const token = localStorage.getItem('token');
+  const [editMode, setEditMode] = useState(false);
+  const [firstName, setFirstName] = useState(profile?.firstName || '');
+  const [lastName, setLastName] = useState(profile?.lastName || '');
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -44,19 +48,46 @@ const ProfilePage = () => {
     navigate('/login');  // Redirect user to login page
   };
 
+  const handleEditClick = () => {
+    setEditMode(true);
+  };
+
+  const handleSaveClick = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ firstName, lastName }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Update failed with status: ${response.status}`);
+      }
+
+      const updatedProfile = await response.json();
+      dispatch(setUserProfile(updatedProfile.body));
+      setEditMode(false);
+    } catch (error) {
+      console.error('Update profile error:', error);
+    }
+  };
+
   return (
     <>
       <nav className="main-nav">
       <div className="main-nav-logo">
           <Link to="/">
-            <img class="main-nav-logo-image" src="../img/argentBankLogo.png" alt="Argent Bank Logo" />
+            <img class="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
           </Link>
           <h1 class="sr-only">Argent Bank</h1>
         </div>
         <div>
           <div class="main-nav-item">
             <i class="fa fa-user-circle"></i>
-            Tony
+            {profile?.firstName || 'undefined'}
           </div>
           <Link to="/" className="main-nav-item" onClick={handleLogout}>
             <i className="fa fa-sign-out"></i>
@@ -65,10 +96,21 @@ const ProfilePage = () => {
         </div>
       </nav>
       <main className="main bg-dark">
-        <div class="header">
-          <h1>Welcome back<br />{profile?.firstName} {profile?.lastName}!</h1>
-          <button class="edit-button">Edit Name</button>
-        </div>
+      <div className="header">
+        {!editMode ? (
+          <h1>Welcome back<br />{profile?.firstName || 'undefined'} {profile?.lastName || 'undefined'}</h1>
+        ) : (
+          <>
+            <input value={firstName} onChange={e => setFirstName(e.target.value)} />
+            <input value={lastName} onChange={e => setLastName(e.target.value)} />
+          </>
+        )}
+        {!editMode ? (
+          <button className="edit-button" onClick={handleEditClick}>Edit Name</button>
+        ) : (
+          <button className="edit-button" onClick={handleSaveClick}>Save</button>
+        )}
+      </div>
         <h2 class="sr-only">Accounts</h2>
         <section class="account">
           <div class="account-content-wrapper">

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setUsername } from '../actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import argentBankLogo from '../img/argentBankLogo.png';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const LoginPage = () => {
       <nav className="main-nav">
       <div className="main-nav-logo">
           <Link to="/">
-            <img class="main-nav-logo-image" src="../img/argentBankLogo.png" alt="Argent Bank Logo" />
+            <img class="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
           </Link>
           <h1 class="sr-only">Argent Bank</h1>
         </div>
