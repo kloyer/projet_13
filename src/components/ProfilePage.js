@@ -39,13 +39,15 @@ const ProfilePage = () => {
 
     if (token) {
       fetchProfile();
+    } else {
+      navigate('/');
     }
   }, [dispatch, token]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');  // Clear token from localStorage
     dispatch(logoutUser());  // Dispatch logout action to reset state
-    navigate('/login');  // Redirect user to login page
+    navigate('/');  // Redirect user to main page
   };
 
   const handleEditClick = () => {
