@@ -115,7 +115,7 @@ paths:
         '500':
           description: Internal Server Error
 
-  /accounts/{accountId}/transactions:
+  /user/accounts/{accountId}/transactions:
     get:
       tags:
         - Transaction Module
@@ -145,7 +145,7 @@ paths:
         '500':
           description: Internal Server Error
 
-  /accounts/{accountId}/transactions/{transactionId}:
+  /user/accounts/{accountId}/transactions/{transactionId}:
     get:
       tags:
         - Transaction Module
@@ -178,7 +178,7 @@ paths:
         '500':
           description: Internal Server Error
 
-  /accounts/{accountId}/transactions/{transactionId}/edit:
+  /user/accounts/{accountId}/transactions/{transactionId}/edit:
     put:
       tags:
         - Transaction Module

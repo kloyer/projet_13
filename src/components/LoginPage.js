@@ -1,77 +1,71 @@
-// src/components/LoginPage.js
-import React from 'react';
-import { useState } from 'react';
+// LoginPage.js
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUsername } from '../actions/userActions';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { login } from '../services/userService'; // Import the login function
 import argentBankLogo from '../img/argentBankLogo.png';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [error, setError] = useState(''); // New state for storing error message
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3001/api/v1/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      if (!response.ok) throw new Error('Login failed');
-      const data = await response.json();
+      const data = await login(email, password);
+      // Assuming the token is in data.body.token, adjust based on actual API response
       localStorage.setItem('token', data.body.token);
       navigate('/profile');
-      setError(''); // Reset error message on successful login
     } catch (error) {
       console.error('Login error:', error);
-      setError('Login failed. Please check your credentials.'); // Set error message on failure
+      setError('Login failed. Please check your credentials.');
     }
   };
 
   return (
     <>
       <nav className="main-nav">
-      <div className="main-nav-logo">
+        <div className="main-nav-logo">
           <Link to="/">
-            <img class="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
+            <img className="main-nav-logo-image" src={argentBankLogo} alt="Argent Bank Logo" />
           </Link>
-          <h1 class="sr-only">Argent Bank</h1>
+          <h1 className="sr-only">Argent Bank</h1>
         </div>
-      <div>
-        <Link to ="/login" className="main-nav-item">
-          <i class="fa fa-user-circle"></i>
-          Sign In
-        </Link>
-      </div>
+        <div>
+          <Link to="/login" className="main-nav-item">
+            <i className="fa fa-user-circle"></i>
+            Sign In
+          </Link>
+        </div>
       </nav>
       <main className="main bg-dark">
-        <section class="sign-in-content">
-          <i class="fa fa-user-circle sign-in-icon"></i>
+        <section className="sign-in-content">
+          <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>
           <form onSubmit={handleLogin}>
-            <div class="input-wrapper">
-              <label for="username">Username</label>
+            <div className="input-wrapper">
+              <label htmlFor="username">Username</label>
               <input type="text" id="username" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
-            <div class="input-wrapper">
-              <label for="password">Password</label>
+            <div className="input-wrapper">
+              <label htmlFor="password">Password</label>
               <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
-            <div class="input-remember">
+            <div className="input-remember">
               <input type="checkbox" id="remember-me" />
-              <label for="remember-me">Remember me</label>
+              <label htmlFor="remember-me">Remember me</label>
             </div>
-            {error && <p className="error">{error}</p>} {/* Display error message */}
-            <button type="submit" class="sign-in-button">Sign In</button>
+            {error && <p className="error">{error}</p>}
+            <button type="submit" className="sign-in-button">Sign In</button>
           </form>
         </section>
       </main>
       <footer className="footer">
-        <p class="footer-text">Copyright 2020 Argent Bank</p>
+        <p className="footer-text">Copyright 2020 Argent Bank</p>
       </footer>
     </>
   );
