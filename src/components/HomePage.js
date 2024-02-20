@@ -1,12 +1,16 @@
 // src/components/HomePage.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import argentBankLogo from '../img/argentBankLogo.png';
 import iconChat from '../img/icon-chat.png';
 import iconMoney from '../img/icon-money.png';
 import iconSecurity from '../img/icon-security.png';
+import { useSelector } from 'react-redux'; // Import useSelector
 
 const HomePage = () => {
+  const user = useSelector((state) => state.user); // Access user state
+  const navigate = useNavigate();
+
   return (
     <>
       <nav className="main-nav">
@@ -17,10 +21,17 @@ const HomePage = () => {
           <h1 className="sr-only">Argent Bank</h1>
         </div>
         <div>
-          <Link to="/login" className="main-nav-item">
-            <i className="fa fa-user-circle"></i>
-            Sign In
-          </Link>
+          {user.profile ? (
+            <Link to="/profile" className="main-nav-item">
+              <i className="fa fa-user-circle"></i>
+              {user.profile.firstName} {/* Display first name */}
+            </Link>
+          ) : (
+            <Link to="/login" className="main-nav-item">
+              <i className="fa fa-user-circle"></i>
+              Sign In
+            </Link>
+          )}
         </div>
       </nav>
       <main>
