@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import argentBankLogo from '../img/argentBankLogo.png';
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
+  const [error, setError] = useState(''); // New state for storing error message
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -25,8 +25,10 @@ const LoginPage = () => {
       const data = await response.json();
       localStorage.setItem('token', data.body.token);
       navigate('/profile');
+      setError(''); // Reset error message on successful login
     } catch (error) {
       console.error('Login error:', error);
+      setError('Login failed. Please check your credentials.'); // Set error message on failure
     }
   };
 
@@ -63,6 +65,7 @@ const LoginPage = () => {
               <input type="checkbox" id="remember-me" />
               <label for="remember-me">Remember me</label>
             </div>
+            {error && <p className="error">{error}</p>} {/* Display error message */}
             <button type="submit" class="sign-in-button">Sign In</button>
           </form>
         </section>
